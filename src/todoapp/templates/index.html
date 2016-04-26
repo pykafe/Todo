@@ -1,9 +1,17 @@
+{% load static %}
+
 <html>
     <head>
         <title></title> 
     </head>
-
     <body>
-    <h1>Hello World!</h1>
+        <todo></todo>
+
+        <script src="{% static 'todo.tag' %}" type="riot/tag"></script>
+        <script src="{% static 'riot/riot+compiler.min.js' %}"></script>
+
+        <script>
+            riot.mount('todo')
+        </script>
     </body>
 </html>
