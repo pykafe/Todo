@@ -3,7 +3,7 @@
 
     <ol>
         <li each={ todos }>
-            { text }
+            { text } <button onclick={ delete }>X</button>
         </li>
     </ol>
 
@@ -34,6 +34,18 @@
                 self.update()
             })
         }
+    }
+
+    delete(e){
+        $.ajax(e.item.url, {
+            method: 'DELETE',
+            success: function(data){ 
+                // remove the todo from the todo list
+                var position_of_item = self.todos.indexOf(e.item)
+                self.todos.splice(position_of_item, 1)
+                self.update()
+            }
+        })
     }
 
 </todo>
