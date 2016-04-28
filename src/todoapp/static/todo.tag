@@ -12,17 +12,27 @@
         <button>Add</button>
     </form>
 
-    this.disabled = false
-    this.items = opts.items
+    var self = this
+    self.disabled = false
+    self.items = opts.items
 
-    this.todos = [
-        {text: 'Hamoos uma'},
-        {text: 'Halo servisu uma'},
-    ]
+    self.todos = [] 
+
+    self.on('mount', function(){
+        $.get('/api/todos/', function(data){
+            self.todos = data.results
+            self.update()
+        })
+    })
 
     add(e){
-        if( this.input.value ){
-            this.todos.push({text: this.input.value})
+        if( self.input.value ){
+            var todo = {text: self.input.value}
+            $.post('/api/todos/', todo, function(data){
+                self.todos.push(data)
+                console.log(self.todos)
+                self.update()
+            })
         }
     }
 

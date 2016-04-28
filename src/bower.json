@@ -17,6 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "riot": "^2.3.17"
+    "riot": "^2.3.17",
+    "jquery": "^2.2.3"
   }
 }
