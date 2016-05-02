@@ -62,3 +62,6 @@ target/
 
 # exclude bower components
 bower_components/
+
+# eclude the db.sqlitee
+db.sqlite3
