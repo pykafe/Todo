@@ -4,6 +4,7 @@
     <ol>
         <li each={ todos }>
             { text }
+            <button onclick={ delete }>X</button>
         </li>
     </ol>
 
@@ -12,18 +13,61 @@
         <button>Add</button>
     </form>
 
-    this.disabled = false
-    this.items = opts.items
+    <script>
+        //this.disabled = false
+        //this.items = opts.items
 
-    this.todos = [
-        {text: 'Hamoos uma'},
-        {text: 'Halo servisu uma'},
-    ]
+        //this.todos = [
+            //{text: 'Hamoos uma'},
+            //{text: 'Halo servisu uma'},
+        //]
 
-    add(e){
-        if( this.input.value ){
-            this.todos.push({text: this.input.value})
+        //add(e){
+            //if( this.input.value ){
+                //this.todos.push({text: this.input.value})
+            //}
+        //}
+
+
+        var self = this
+        self.todos = []
+
+        this.on('mount', function(){
+            // get our todos
+            $.get('/api/todos/', function(data){
+                console.log(self)
+                self.todos = data.results
+                self.update()
+            })
+        })
+
+        add(e){
+            // check if we have a todo to post
+            if( self.input.value ){
+                var new_todo = { text: self.input.value }
+                // post the new todo to the api
+                $.post('/api/todos/', new_todo, function(data){
+                    console.log(data)
+                    // we add the todo to the todo array
+                    self.todos.push(data)
+                    // we update the display of the tag
+                    self.update()
+                })
+                self.input.value = ""
+            }
         }
-    }
 
+        delete(e){
+            // delete the todo
+            $.ajax(e.item.url, {
+                method: 'DELETE',
+                success: function(data){
+                    // delete the todo from the local array
+                    var items_position = self.todos.indexOf(e.item)
+                    self.todos.splice(items_position, 1)
+                    self.update()
+                }
+            })
+        }
+    </script>
 </todo>
