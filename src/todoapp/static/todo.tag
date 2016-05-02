@@ -3,10 +3,18 @@
 
     <ol>
         <li each={ todos }>
-            { text } <button onclick={ delete }>X</button>
-            <button onclick={ edit }>edit</button>
+            <div>
+                { text }
+                <button onclick={ delete }>X</button>
+                <button onclick={ edit }>edit</button>
+            </div>
         </li>
     </ol>
+    <div if={ editing_item }>
+        <input name="edit_input"  >
+        <button onclick={ save_edit }>save</button>
+        <button onclick={ stop_edit }>back</button>
+    </div>
 
     <form onsubmit={ add }>
         <input name="input" onkeyup={ edit_up }>
@@ -16,6 +24,8 @@
     var self = this
     self.disabled = false
     self.items = opts.items
+    self.editing_item = false
+    console.log(self)
 
     self.todos = [] 
 
@@ -28,7 +38,7 @@
 
      edit_up(e) {
         self.text = e.target.value
-        }
+    }
 
 
     add(e){
@@ -56,12 +66,22 @@
     }
 
     edit(e){
-        $.ajax(e.item.url, {
-            method: 'GET',
-            success: function(data){
-            console.log(e.item.text)
-                // edit the todo from the todo list
-                self.input.value = data.text = e.item.text
+        self.editing_item = e.item
+        self.edit_input.value = e.item.text
+    }
+
+    stop_edit(e){
+        self.editing_item = false
+    }
+
+    save_edit(e){
+        console.log(self)
+        self.editing_item.text = self.edit_input.value
+        $.ajax(self.editing_item.url, {
+            method: 'PUT',
+            data: self.editing_item,
+            success: function(data){ 
+                self.editing_item = false
                 self.update()
             }
         })
