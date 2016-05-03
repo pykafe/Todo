@@ -1,29 +1,18 @@
 <todo>
-    <h1>Hello World</h1>
-
+    <h1> ToDo </h1>
     <ol>
-        <li each={ todos }>
-            { text }
-        </li>
+        <li each = { tasks }> { task } </li>
     </ol>
 
-    <form onsubmit={ add }>
-        <input name="input">
-        <button>Add</button>
-    </form>
+    <input type="text" id="taskinput"/>
+    <button onclick={ add }> Add </button>
 
-    this.disabled = false
-    this.items = opts.items
-
-    this.todos = [
-        {text: 'Hamoos uma'},
-        {text: 'Halo servisu uma'},
-    ]
+    <script>
+    this.tasks = [{'task': 'Tugas'}, {'task': 'Push commit'}]
 
     add(e){
-        if( this.input.value ){
-            this.todos.push({text: this.input.value})
-        }
+        new_task = {'task': taskinput.value}
+        this.tasks.push(new_task)
     }
-
+    </script>
 </todo>
