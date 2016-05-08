@@ -4,7 +4,7 @@
     <ol>
         <li each={ todos }>
             <div>
-                { text }
+                { text } { done }
                 <button onclick={ delete }>X</button>
                 <button onclick={ edit }>edit</button>
             </div>
@@ -12,12 +12,14 @@
     </ol>
     <div if={ editing_item }>
         <input name="edit_input"  >
+        <input type="checkbox" name="edit_checkbox">
         <button onclick={ save_edit }>save</button>
         <button onclick={ stop_edit }>back</button>
     </div>
 
     <form onsubmit={ add }>
         <input name="input" onkeyup={ edit_up }>
+        <input type="checkbox" id="checkbox">
         <button disabled={ !text }>Add</button>
     </form>
 
@@ -43,7 +45,7 @@
 
     add(e){
         if( self.input.value ){
-            var todo = {text: self.input.value}
+            var todo = {text: self.input.value, done: checkbox.checked}
             $.post('/api/todos/', todo, function(data){
                 self.todos.push(data)
                 console.log(self.todos)
@@ -68,6 +70,7 @@
     edit(e){
         self.editing_item = e.item
         self.edit_input.value = e.item.text
+        self.edit_checkbox.checked = e.item.done
     }
 
     stop_edit(e){
@@ -77,6 +80,7 @@
     save_edit(e){
         console.log(self)
         self.editing_item.text = self.edit_input.value
+        self.editing_item.done = self.edit_checkbox.checked
         $.ajax(self.editing_item.url, {
             method: 'PUT',
             data: self.editing_item,
