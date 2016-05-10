@@ -12,7 +12,19 @@
         <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
 
         <script>
+            // Note that the path doesn't matter right now; any WebSocket
+            // connection gets bumped over to WebSocket consumers
+            socket = new WebSocket("ws://127.0.0.1:8000/todo/");
+            socket.onmessage = function(e) {
+                console.log(e)
+                alert(e.data);
+             }
+            socket.onopen = function(e) {
+                socket.send(e);
+            }
+
             riot.mount('todo')
         </script>
+
     </body>
 </html>
