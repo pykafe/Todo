@@ -5,6 +5,7 @@
         <li each={ todos }>
             { text }
             <button onclick={ delete }>X</button>
+            <button onclick={ edit }>Edit</button>
         </li>
     </ol>
 
@@ -12,6 +13,12 @@
         <input name="input">
         <button>Add</button>
     </form>
+
+    <div if={ editing_item }>
+        <input name="edit_input">
+        <button onclick={ edit_save }>Edit</button>
+        <button onclick={ stop_edit } >Stop</button>
+    </div>
 
     <script>
         //this.disabled = false
@@ -30,6 +37,7 @@
 
 
         var self = this
+        self.adding_item = true
         self.todos = []
 
         this.on('mount', function(){
@@ -65,6 +73,30 @@
                     // delete the todo from the local array
                     var items_position = self.todos.indexOf(e.item)
                     self.todos.splice(items_position, 1)
+                    self.update()
+                }
+            })
+        }
+
+        edit(e){
+            self.adding_item = false
+            self.editing_item = e.item
+            self.edit_input.value = e.item.name
+        }
+
+        stop_edit(e){
+            self.adding_item = false
+            self.adding_item = true
+        }
+
+        edit_save(e){
+            self.editing_item.name = self.edit_input.value
+            $.ajax(self.editing_item.url, {
+                method: 'PUT',
+                data: self.editing_item,
+                success: function(data){
+                    self.editing_item = false
+                    self.adding_item = true
                     self.update()
                 }
             })
