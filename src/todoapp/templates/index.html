@@ -17,13 +17,17 @@
             socket = new WebSocket("ws://127.0.0.1:8000/todo/");
             socket.onmessage = function(e) {
                 console.log(e)
-                alert(e.data);
+                console.log(e.data);
              }
-            socket.onopen = function(e) {
-                socket.send(e);
-            }
+            socket.onopen = function() {
+                opts = {{ todos|safe}}
 
-            riot.mount('todo')
+                socket.send(opts)
+                    alert(opts)
+            }
+            
+            opts = {{ todos|safe}}
+            riot.mount('todo', opts)
         </script>
 
     </body>

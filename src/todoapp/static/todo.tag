@@ -30,6 +30,7 @@
     console.log(self)
 
     self.todos = [] 
+    self.todos = opts.todos 
 
     self.on('mount', function(){
         $.get('/api/todos/', function(data){
