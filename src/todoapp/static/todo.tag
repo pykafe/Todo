@@ -4,21 +4,22 @@
     <ol>
         <li each={ todos }>
             { text }
-            <button onclick={ delete }>X</button>
+            <button onclick={ delete }>Delete</button>
             <button onclick={ edit }>Edit</button>
         </li>
     </ol>
 
-    <form onsubmit={ add }>
+    <form if={ adding_item } onsubmit={ add }>
         <input name="input">
         <button>Add</button>
     </form>
 
-    <div if={ editing_item }>
+    <div if={ item_edit }>
         <input name="edit_input">
-        <button onclick={ edit_save }>Edit</button>
-        <button onclick={ stop_edit } >Stop</button>
+        <button onclick={ edit_save }>Submit</button>
+        <button onclick={ stop_edit } >Cancel</button>
     </div>
+
 
     <script>
         //this.disabled = false
@@ -80,26 +81,27 @@
 
         edit(e){
             self.adding_item = false
-            self.editing_item = e.item
-            self.edit_input.value = e.item.name
+            self.item_edit = e.item
+            self.edit_input.value = e.item.text
         }
 
         stop_edit(e){
-            self.adding_item = false
+            self.item_edit = false
             self.adding_item = true
         }
 
         edit_save(e){
-            self.editing_item.name = self.edit_input.value
-            $.ajax(self.editing_item.url, {
+            self.item_edit.text = self.edit_input.value
+            $.ajax(self.item_edit.url, {
                 method: 'PUT',
-                data: self.editing_item,
+                data: self.item_edit,
                 success: function(data){
-                    self.editing_item = false
+                    self.item_edit = false
                     self.adding_item = true
                     self.update()
                 }
             })
         }
     </script>
+
 </todo>
