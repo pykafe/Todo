@@ -10,7 +10,7 @@
 
     <form onsubmit={ add }>
         Text: <input name="input">
-        Done <input type="checkbox" name="vehicle" value="Bike">   
+        Done <input type="checkbox" id="checkbox" />
         <button>Add</button>
     </form>
 
