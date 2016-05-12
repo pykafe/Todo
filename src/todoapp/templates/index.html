@@ -19,13 +19,13 @@
                 console.log(e)
                 console.log(e.data);
              }
-            socket.onopen = function() {
-                opts = {{ todos|safe}}
-
-                socket.send(opts)
-                    alert(opts)
-            }
             
+           socket.onmessage = function(e) {
+                console.log(e)
+                console.log(e.data);
+                //do something with the updated todo here
+             }
+ 
             opts = {{ todos|safe}}
             riot.mount('todo', opts)
         </script>
