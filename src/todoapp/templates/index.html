@@ -13,18 +13,16 @@
 
         <script>
              // set up a WebSocket
-            // initial tweets come from Django template tag
-            var todos = {{ todos|safe }} 
-
-            // Create a store instance.
             socket = new WebSocket("ws://127.0.0.1:8000/todo/");
             socket.onmessage = function(e) {
-                console.log(e.data.text)
-                alert(e.data.text)
-                console.log(e.data.text)
+                   // console.log(e)
+                   // console.log(riot)
+                    console.log(riot.route.create)
+                        riot.route.create({'todo': e.data})
+                   // console.log(e)
             }
-            opts = {{ todos|safe}}
-            riot.mount('todo', opts)
+
+            riot.mount('todo')
         </script>
 
     </body>

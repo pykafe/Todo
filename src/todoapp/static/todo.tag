@@ -4,7 +4,8 @@
     <ol>
         <li each={ todos }>
             <div>
-                { text } { done }
+                { text }
+                <input type="checkbox" checked={ done }/>
                 <button onclick={ delete }>X</button>
                 <button onclick={ edit }>edit</button>
             </div>
@@ -48,13 +49,14 @@
         if( self.input.value ){
             var todo = {text: self.input.value, done: checkbox.checked}
             $.post('/api/todos/', todo, function(data){
-                self.todos.push(data)
-                console.log(self.todos)
+                var sock = socket.send(data['text'])
+                self.todos.push(sock)
                 self.input.value = ''
                 self.update()
             })
         }
     }
+
 
     delete(e){
         $.ajax(e.item.url, {
@@ -92,5 +94,4 @@
         })
     }
 
-  
 </todo>
