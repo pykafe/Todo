@@ -1,11 +1,11 @@
 <todo>
     <h1>Hello World</h1>
 
-    <ol>
+    <ul>
         <li each={ todos }>
             { text } <button onclick={ delete }>X</button>
         </li>
-    </ol>
+    </ul>
 
     <form onsubmit={ add }>
         <input name="input">
