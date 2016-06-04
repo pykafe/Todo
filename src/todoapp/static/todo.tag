@@ -28,28 +28,21 @@
         self.update()
     })
 
-    RiotControl.on('todo_added', function(new_todo){
-        console.log('todo_added heard by tag')
-        console.log(new_todo)
-        self.todos.push(new_todo)
-        self.update()
-    })
-
-    RiotControl.on('todo_deleted', function(deleted_todo){
-        console.log('todo_deleted heard by tag')
-        var position_in_array = self.todos.indexOf(deleted_todo)
-        self.todos.splice(position_in_array, 1)
-        self.update()
-    })
-
     add(e){
         if( self.input.value ){
+            
+            var new_todo = {text: self.input.value}
+            self.todos.push(new_todo)
+
             console.log('add button clicked, add_todo triggered')
-            RiotControl.trigger('add_todo', self.input.value)
+            RiotControl.trigger('add_todo', new_todo)
         }
     }
 
     delete(e){
+        var position_in_array = self.todos.indexOf(e.item)
+        self.todos.splice(position_in_array, 1)
+
         console.log('delete button clicked, delete_todo triggered')
         RiotControl.trigger('delete_todo', e.item)
     }
