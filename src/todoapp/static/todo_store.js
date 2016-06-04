@@ -20,10 +20,23 @@ function TodoStore() {
         console.log('add_todo has been heard by todo store');
         console.log(todo_text);
         var todo = {text: todo_text}
-        $.post('/api/todos/', todo, function(data){
+        $.post('/api/todos/', todo, function(new_todo){
             console.log('todo has been created');
-            console.log(data);
-            self.trigger('todo_added', data)
+            console.log(new_todo);
+            self.trigger('todo_added', new_todo)
         })
     })
+
+    self.on('delete_todo', function(todo){
+        console.log('delete_todo has been heard by todo store');
+        console.log(todo);
+        $.ajax(todo.url, {
+            method: 'DELETE',
+            success: function(){ 
+                console.log('todo has been deleted');
+                self.trigger('todo_deleted', todo)
+            }
+        })
+    })
+
 }

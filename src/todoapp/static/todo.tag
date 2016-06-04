@@ -35,6 +35,13 @@
         self.update()
     })
 
+    RiotControl.on('todo_deleted', function(deleted_todo){
+        console.log('todo_deleted heard by tag')
+        var position_in_array = self.todos.indexOf(deleted_todo)
+        self.todos.splice(position_in_array, 1)
+        self.update()
+    })
+
     add(e){
         if( self.input.value ){
             console.log('add button clicked, add_todo triggered')
@@ -43,15 +50,8 @@
     }
 
     delete(e){
-        $.ajax(e.item.url, {
-            method: 'DELETE',
-            success: function(data){ 
-                // remove the todo from the todo list
-                var position_of_item = self.todos.indexOf(e.item)
-                self.todos.splice(position_of_item, 1)
-                self.update()
-            }
-        })
+        console.log('delete button clicked, delete_todo triggered')
+        RiotControl.trigger('delete_todo', e.item)
     }
 
 </todo>
