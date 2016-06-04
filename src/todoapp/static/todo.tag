@@ -5,6 +5,7 @@
         <li each={ todos }>
             { text }
             <button onclick={ delete }>X</button>
+            <button onclick={ edit }>edit</button>
         </li>
     </ol>
 
@@ -25,6 +26,10 @@
         })
 
     })
+
+    edit_up(e) {
+            self.text = e.target.value
+            }
 
     add(e){
        // check if we have a todo to post
@@ -56,4 +61,16 @@
                 }
             })
         }
+
+    edit(e){
+        $.ajax(e.item.url, {
+            method: 'GET',
+            success: function(data){
+            console.log(e.item.text)
+                // edit the todo from the todo list
+                self.input.value = data.text = e.item.text
+                self.update()
+            }
+        })
+    }
 </todo>
