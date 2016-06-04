@@ -13,16 +13,19 @@
     </form>
 
     var self = this
-    self.disabled = false
-    self.items = opts.items
 
     self.todos = [] 
 
     self.on('mount', function(){
-        $.get('/api/todos/', function(data){
-            self.todos = data.results
-            self.update()
-        })
+        console.log('todos tag mounted, todos_please triggered')
+        RiotControl.trigger('todos_please')
+    })
+
+    RiotControl.on('todos_available', function(todos){
+        console.log('todos_available heard by tag')
+        console.log(todos)
+        self.todos = todos
+        self.update()
     })
 
     add(e){
@@ -30,7 +33,6 @@
             var todo = {text: self.input.value}
             $.post('/api/todos/', todo, function(data){
                 self.todos.push(data)
-                console.log(self.todos)
                 self.update()
             })
         }

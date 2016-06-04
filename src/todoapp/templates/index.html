@@ -9,9 +9,13 @@
 
         <script src="{% static 'todo.tag' %}" type="riot/tag"></script>
         <script src="{% static 'riot/riot+compiler.min.js' %}"></script>
+        <script src="{% static 'RiotControl/riotcontrol.js' %}"></script>
         <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+        <script src="{% static 'todo_store.js' %}"></script>
 
         <script>
+            RiotControl.addStore(new TodoStore());
+
             riot.mount('todo')
         </script>
     </body>
