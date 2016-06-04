@@ -61,4 +61,5 @@ target/
 #Ipython Notebook
 .ipynb_checkpoints
 
+src/db.sqlite3
 bower_components/
