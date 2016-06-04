@@ -15,4 +15,15 @@ function TodoStore() {
             self.trigger('todos_available', data.results)
         })
     });
+
+    self.on('add_todo', function(todo_text){
+        console.log('add_todo has been heard by todo store');
+        console.log(todo_text);
+        var todo = {text: todo_text}
+        $.post('/api/todos/', todo, function(data){
+            console.log('todo has been created');
+            console.log(data);
+            self.trigger('todo_added', data)
+        })
+    })
 }

@@ -28,13 +28,17 @@
         self.update()
     })
 
+    RiotControl.on('todo_added', function(new_todo){
+        console.log('todo_added heard by tag')
+        console.log(new_todo)
+        self.todos.push(new_todo)
+        self.update()
+    })
+
     add(e){
         if( self.input.value ){
-            var todo = {text: self.input.value}
-            $.post('/api/todos/', todo, function(data){
-                self.todos.push(data)
-                self.update()
-            })
+            console.log('add button clicked, add_todo triggered')
+            RiotControl.trigger('add_todo', self.input.value)
         }
     }
 

@@ -6,17 +6,22 @@
     </head>
     <body>
         <todo></todo>
+        <count></count>
 
         <script src="{% static 'todo.tag' %}" type="riot/tag"></script>
+        <script src="{% static 'count.tag' %}" type="riot/tag"></script>
         <script src="{% static 'riot/riot+compiler.min.js' %}"></script>
         <script src="{% static 'RiotControl/riotcontrol.js' %}"></script>
         <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
         <script src="{% static 'todo_store.js' %}"></script>
+        <script src="{% static 'another_store.js' %}"></script>
 
         <script>
             RiotControl.addStore(new TodoStore());
+            RiotControl.addStore(new AnotherStore());
 
             riot.mount('todo')
+            riot.mount('count')
         </script>
     </body>
 </html>
