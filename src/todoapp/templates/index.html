@@ -8,20 +8,22 @@
         <todo></todo>
 
         <script src="{% static 'todo.tag' %}" type="riot/tag"></script>
-        <script src="{% static 'riot/riot+compiler.min.js' %}"></script>
+        <script src="{% static 'todostore.js' %}"></script>
+        <script src="{% static 'riot/riot+compiler.csp.min.js' %}"></script>
         <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+        <script src="{% static 'RiotControl/riotcontrol.js' %}"></script>
 
         <script>
              // set up a WebSocket
             socket = new WebSocket("ws://127.0.0.1:8000/todo/");
+            console.log(socket)
             socket.onmessage = function(e) {
-                   // console.log(e)
-                   // console.log(riot)
-                    console.log(riot.route.create)
-                        riot.route.create({'todo': e.data})
-                   // console.log(e)
+                console.log(e)
+                RiotControl.trigger('todo_append', {'text': e.data})
+                console.log(e)
             }
-
+            
+            RiotControl.addStore(new TodoStore()) 
             riot.mount('todo')
         </script>
 

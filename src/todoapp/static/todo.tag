@@ -34,11 +34,14 @@
     self.todos = opts.todos 
 
     self.on('mount', function(){
-        $.get('/api/todos/', function(data){
-            self.todos = data.results
-            self.update()
-        })
+       RiotControl.trigger('todo_init') 
     })
+
+    RiotControl.on('todos_changed', function(todos){
+        self.todos = todos
+        self.update()
+    })
+
 
      edit_up(e) {
         self.text = e.target.value
@@ -48,26 +51,18 @@
     add(e){
         if( self.input.value ){
             var todo = {text: self.input.value, done: checkbox.checked}
-            $.post('/api/todos/', todo, function(data){
-                var sock = socket.send(data['text'])
-                self.todos.push(sock)
-                self.input.value = ''
-                self.update()
-            })
+            RiotControl.trigger('todo_add', todo)
+            self.input.value = ''
         }
     }
 
 
     delete(e){
-        $.ajax(e.item.url, {
-            method: 'DELETE',
-            success: function(data){ 
-                // remove the todo from the todo list
-                var position_of_item = self.todos.indexOf(e.item)
-                self.todos.splice(position_of_item, 1)
-                self.update()
-            }
-        })
+        // remove the todo from the todo list
+        var position_of_item = self.todos.indexOf(e.item)
+        self.todos.splice(position_of_item, 1)
+
+        RiotControl.trigger('delete_todo', e.item)
     }
 
     edit(e){
