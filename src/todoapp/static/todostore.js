@@ -19,14 +19,15 @@ function TodoStore(){
         })
     })
 
-    self.on('todo_append', function(newtodo){
+
+     self.on('todo_append', function(newtodo){
         self.todos.push(newtodo)
         self.trigger('todos_changed', self.todos)
     })
 
-    self.on('delete_todo', function(todo_delete){
-        console.log(todo_delete)
-        $.ajax(todo_delete.url, {
+
+    self.on('delete_todo', function(deletetodo){
+        $.ajax(deletetodo.url, {
             method: 'DELETE',
             success: function(){
                 console.log('fsdfjsdfjsd');

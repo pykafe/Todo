@@ -139,3 +139,13 @@ CHANNEL_LAYERS = {
         "ROUTING": "todo.routing.channel_routing",
     },
 }
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+        "ROUTING": "todo.routing.channel_routing",
+    },
+}
