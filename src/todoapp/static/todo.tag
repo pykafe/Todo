@@ -79,14 +79,8 @@
         console.log(self)
         self.editing_item.text = self.edit_input.value
         self.editing_item.done = self.edit_checkbox.checked
-        $.ajax(self.editing_item.url, {
-            method: 'PUT',
-            data: self.editing_item,
-            success: function(data){ 
-                self.editing_item = false
-                self.update()
-            }
-        })
+        RiotControl.trigger('edit_save', self.editing_item)
+        self.editing_item = false
     }
 
 </todo>

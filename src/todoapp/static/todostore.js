@@ -14,8 +14,7 @@ function TodoStore(){
     self.on('todo_add', function(newtodo){
         $.post('/api/todos/', newtodo, function(data){
             socket.send(data['text'])
-            console.log(data)
-        self.trigger('todos_changed', self.todos)
+            self.trigger('todos_changed', self.todos)
         })
     })
 
@@ -30,11 +29,22 @@ function TodoStore(){
         $.ajax(deletetodo.url, {
             method: 'DELETE',
             success: function(){
-                console.log('fsdfjsdfjsd');
             }
 
         })
 
+    })
+
+    self.on('edit_save', function(edittodo){
+        console.log(edittodo)
+        $.ajax(edittodo.url, {
+            method: 'PUT',
+            data: edittodo,
+            success: function(data){ 
+                socket.send(data['text'])
+                self.trigger('todos_changed', self.todos)
+            }
+        })
     })
 
 }

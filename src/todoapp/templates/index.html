@@ -15,7 +15,7 @@
 
         <script>
              // set up a WebSocket
-            socket = new WebSocket("ws://127.0.0.1:8000/todo/");
+            socket = new WebSocket("ws://0.0.0.0:8000/todo/");
             console.log(socket)
             socket.onmessage = function(e) {
                 console.log(e)
